@@ -1,0 +1,65 @@
+﻿@model CabHelpWebApplication.Models.DestinationRegValueViewModel
+
+@{
+    ViewBag.Title = "Edit Destination Registry Value";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a destination registry value</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditValue", "DestinationRegistryValues"))
+        {
+            @Html.HiddenFor(m => m.DestinationRegValue.ValueId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DestinationRegValue.RegistryRoot, "Registry root:")
+                @Html.DropDownListFor(
+                    m => m.DestinationRegValue.RegistryRoot,
+                    Enum.GetNames(typeof(Emerson.Common.Entities.RegistryRoot)).Select(n => new SelectListItem
+                    {
+                        Text = n,
+                        Value = n,
+                        Selected = Model.DestinationRegValue.RegistryRoot.ToString() == n
+                    }),
+                    "Select here...",
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DestinationRegValue.Subkey, "Subkey:")
+                @Html.TextBoxFor(m => m.DestinationRegValue.Subkey, new { @class = "form-control", placeholder = "E.g. 'Software\\%AppName%'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DestinationRegValue.ValueName, "Value name:")
+                @Html.TextBoxFor(m => m.DestinationRegValue.ValueName, new { @class = "form-control", placeholder = "E.g. 'ParameterName'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DestinationRegValue.Value, "Value:")
+                @Html.TextBoxFor(m => m.DestinationRegValue.Value, new { @class = "form-control", placeholder = "E.g. 'ParameterValue'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DestinationRegValue.Flags, "Flags:")
+                @Html.DropDownListFor(
+                    m => m.DestinationRegValue.Flags,
+                    Enum.GetNames(typeof(Emerson.Common.Entities.DestinationRegValueFlags)).Select(n => new SelectListItem
+                    {
+                        Text = n,
+                        Value = n,
+                        Selected = Model.DestinationRegValue.Flags.ToString() == n
+                    }),
+                    "Select here...",
+                     new { @class = "form-control" })
+            </div>
+
+            @Html.Hidden("parentSectionId", Model.ParentSectionId)
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

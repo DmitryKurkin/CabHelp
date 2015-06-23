@@ -1,0 +1,33 @@
+﻿@model Emerson.Common.Project
+
+@{
+    ViewBag.Title = "Edit Base Properties";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit the base properties</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.AppName, "App name:")
+                @Html.TextBoxFor(m => m.AppName, new { @class = "form-control", placeholder = "E.g. 'MyCoolApp'" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CompanyName, "Company name:")
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control", placeholder = "E.g. 'MyCompany Inc.'" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.InstallDirectory, "Install directory:")
+                @Html.TextBoxFor(m => m.InstallDirectory, new { @class = "form-control", placeholder = "E.g. '\\HARDDisk\\Apps\\MyCoolApp'" })
+            </div>
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

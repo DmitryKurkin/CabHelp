@@ -1,0 +1,30 @@
+﻿@model Emerson.Common.Sections.DestinationRegValuesSection
+
+@{
+    ViewBag.Title = "Edit Destination Registry Values Section";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a destination registry values section</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditSection", "DestinationRegistryValues"))
+        {
+            @Html.HiddenFor(m => m.SectionId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Name, "Section name:")
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "E.g. 'RegKeys'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.IsDefault, "Is default:")
+                @Html.CheckBoxFor(m => m.IsDefault, new { @class = "form-control" })
+            </div>
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

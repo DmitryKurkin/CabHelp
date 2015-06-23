@@ -1,0 +1,25 @@
+﻿@model Emerson.Common.Sections.ShortcutListSection
+
+@{
+    ViewBag.Title = "Edit Destination Shortcut List Section";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a destination shortcut list section</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditSection", "DestinationShortcuts"))
+        {
+            @Html.HiddenFor(m => m.SectionId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Name, "Section name:")
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "E.g. 'ShortcutsData'" })
+            </div>
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

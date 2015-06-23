@@ -1,0 +1,55 @@
+﻿@model CabHelpWebApplication.Models.DestinationFileViewModel
+
+@{
+    ViewBag.Title = "Edit Destination File";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a destination file</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditFile", "DestinationDirectories"))
+        {
+            @Html.HiddenFor(m => m.DestinationFile.FileId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DestinationFile.SourceFileName, "Original file name:")
+                @Html.DropDownListFor(
+                    m => m.DestinationFile.SourceFileName,
+                    Model.SourceFiles.Select(sfn => new SelectListItem
+                    {
+                        Text = sfn,
+                        Value = sfn,
+                        Selected = Model.DestinationFile.SourceFileName == sfn
+                    }),
+                    "Select here...",
+                    new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DestinationFile.FileName, "New file name (optional):")
+                @Html.TextBoxFor(m => m.DestinationFile.FileName, new { @class = "form-control", placeholder = "E.g. 'SomeChangedFileName.ext'" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DestinationFile.Flags, "Flags:")
+                @Html.DropDownListFor(
+                    m => m.DestinationFile.Flags,
+                    Enum.GetNames(typeof(Emerson.Common.Entities.DestinationFileFlags)).Select(n => new SelectListItem
+                    {
+                        Text = n,
+                        Value = n,
+                        Selected = Model.DestinationFile.Flags.ToString() == n
+                    }),
+                    "Select here...",
+                     new { @class = "form-control" })
+            </div>
+
+            @Html.Hidden("parentDirId", Model.ParentDirId)
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

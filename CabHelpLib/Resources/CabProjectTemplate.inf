@@ -1,0 +1,12 @@
+[Version]
+Signature = "$Windows NT$"
+Provider = "#PROVIDERNAME#"
+CESignature = "$Windows CE$"
+
+[CEStrings]
+AppName = "#APPNAME#"
+InstallDir = "#INSTALLDIR#"
+			
+[CEDevice]
+BuildMax = 0xE0000000
+

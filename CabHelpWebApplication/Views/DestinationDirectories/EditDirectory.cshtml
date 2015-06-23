@@ -1,0 +1,35 @@
+﻿@model Emerson.Common.Entities.DestinationDir
+
+@{
+    ViewBag.Title = "Destination Directory";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a destination directory</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditDirectory", "DestinationDirectories"))
+        {
+            @Html.HiddenFor(m => m.DirId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.DirectoryName, "Directory name:")
+                @Html.TextBoxFor(m => m.DirectoryName, new { @class = "form-control", placeholder = "E.g. '%InstallDir%'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.IsDefault, "Is default:")
+                @Html.CheckBoxFor(m => m.IsDefault, new { @class = "form-control" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.SectionName, "Section name:")
+                @Html.TextBoxFor(m => m.SectionName, new { @class = "form-control", placeholder = "E.g. 'CopyToInstallDir'" })
+            </div>
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

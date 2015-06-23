@@ -1,0 +1,89 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Source Directories Info";
+}
+
+<script src="~/Scripts/FileListCollector.js"></script>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Source directories info</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.ActionLink("Create new", "CreateDirectory", null, new { @class = "btn btn-primary" })
+        </p>
+
+        @if (Model.Project.SourceDirs.Directories.Count() != 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Path</th>
+                        <th>Comment</th>
+                        <th>Files</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sd in Model.Project.SourceDirs.Directories)
+                    {
+                        <tr>
+                            <td>@sd.Path</td>
+                            <td>@sd.Comment</td>
+                            <td>
+                                <p>
+                                    @Html.ActionLink("Create new", "CreateFile", new { dirId = sd.DirId }, new { @class = "btn btn-xs btn-primary" })
+                                    @using (Html.BeginForm("LoadFiles", "SourceDirectories", FormMethod.Post, new { @class="fileloader" }))
+                                    {    
+                                        @Html.Hidden("dirId", sd.DirId, new { id = "idDirId" })
+                                        @Html.Hidden("fileList", string.Empty, new { id = "idFileList" })
+                                        <input type="file" multiple id="idFileSelector" class="btn btn-xs btn-default" />
+                                        <input type="submit" value="Load existing" class="btn btn-xs btn-default" />
+                                    }
+                                </p>
+
+                                @if (sd.Files.Count() != 0)
+                                {
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>File name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var sf in sd.Files)
+                                            {
+                                                <tr>
+                                                    <td>@sf.FileName</td>
+                                                    <td>
+                                                        @Html.ActionLink("Edit", "EditFile", new { dirId = sd.DirId, fileId = sf.FileId }, new { @class = "btn btn-xs btn-primary" })
+                                                        @Html.ActionLink("Delete", "DeleteFile", new { dirId = sd.DirId, fileId = sf.FileId }, new { @class = "btn btn-xs btn-danger" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="label label-warning">No source files exist</div>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditDirectory", new { dirId = sd.DirId }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteDirectory", new { dirId = sd.DirId }, new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="label label-warning">No source directories exist</div>
+        }
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿@model CabHelpWebApplication.Models.ShortcutViewModel
+
+@{
+    ViewBag.Title = "Edit Destination Shortcut";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a destination shortcut:</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditShortcut", "DestinationShortcuts"))
+        {
+            @Html.HiddenFor(m => m.Shortcut.ShortcutId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Shortcut.Name, "Shortcut name:")
+                @Html.TextBoxFor(m => m.Shortcut.Name, new { @class = "form-control", placeholder = "E.g. 'MyCoolApp'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Shortcut.Type, "Shortcut type:")
+                @Html.DropDownListFor(
+                    m => m.Shortcut.Type,
+                    Enum.GetNames(typeof(Emerson.Common.Entities.ShortcutType)).Select(n => new SelectListItem
+                    {
+                        Text = n,
+                        Value = n,
+                        Selected = Model.Shortcut.Type.ToString() == n
+                    }),
+                    "Select here...",
+                     new { @class = "form-control" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Shortcut.TargetPath, "Target path:")
+                @Html.TextBoxFor(m => m.Shortcut.TargetPath, new { @class = "form-control", placeholder = "String value that specifies the destination file or folder" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Shortcut.StandardDestinationPath, "Standard destination path:")
+                @Html.TextBoxFor(m => m.Shortcut.StandardDestinationPath, new { @class = "form-control", placeholder = "Optional string value that specifies where the shortcut file is created" })
+            </div>
+
+            @Html.Hidden("parentSectionId", Model.ParentSectionId)
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

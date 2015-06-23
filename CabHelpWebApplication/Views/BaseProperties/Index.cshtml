@@ -1,0 +1,52 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Base Properties Info";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Base properties info</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.ActionLink("Edit", "Edit", null, new { @class = "btn btn-primary" })
+        </p>
+
+        <div class="panel-group">
+            @Html.LabelFor(m => m.Project.AppName, "App name:")
+            @if (!string.IsNullOrWhiteSpace(Model.Project.AppName))
+            {
+                @Model.Project.AppName
+            }
+            else
+            {
+                <div class="label label-warning">NOT SET</div>
+            }
+        </div>
+
+        <div class="panel-group">
+            @Html.LabelFor(m => m.Project.CompanyName, "Company name:")
+            @if (!string.IsNullOrWhiteSpace(Model.Project.CompanyName))
+            {
+                @Model.Project.CompanyName
+            }
+            else
+            {
+                <div class="label label-warning">NOT SET</div>
+            }
+        </div>
+
+        <div class="panel-group">
+            @Html.LabelFor(m => m.Project.InstallDirectory, "Install directory:")
+            @if (!string.IsNullOrWhiteSpace(Model.Project.InstallDirectory))
+            {
+                @Model.Project.InstallDirectory
+            }
+            else
+            {
+                <div class="label label-warning">NOT SET</div>
+            }
+        </div>
+    </div>
+</div>

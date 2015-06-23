@@ -1,0 +1,30 @@
+﻿@model Emerson.Common.Entities.SourceDir
+
+@{
+    ViewBag.Title = "Source Directory";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a source directory</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditDirectory", "SourceDirectories"))
+        {
+            @Html.HiddenFor(m => m.DirId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Path, "Path:")
+                @Html.TextBoxFor(m => m.Path, new { @class = "form-control", placeholder = "E.g. 'C:\\Sources\\MyCoolApp'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Comment, "Comment:")
+                @Html.TextBoxFor(m => m.Comment, new { @class = "form-control", placeholder = "E.g. 'The root app folder'" })
+            </div>
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

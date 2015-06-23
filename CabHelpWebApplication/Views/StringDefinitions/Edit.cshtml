@@ -1,0 +1,30 @@
+﻿@model Emerson.Common.Entities.StringDef
+
+@{
+    ViewBag.Title = "String Definition";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a string definition</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Edit", "StringDefinitions"))
+        {
+            @Html.HiddenFor(m => m.DefId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Key, "Key:")
+                @Html.TextBoxFor(m => m.Key, new { @class = "form-control", placeholder = "E.g. 'KeyName'" })
+            </div>
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.Value, "Value:")
+                @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "E.g. 'KeyValue'" })
+            </div>
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "String Definitions Info";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">String definitions info</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.ActionLink("Create new", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+
+        @if (Model.Project.StringDefs.Defs.Count() != 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var strDef in Model.Project.StringDefs.Defs)
+                    {
+                        <tr>
+                            <td>@strDef.Key</td>
+                            <td>@strDef.Value</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { defId = strDef.DefId }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "Delete", new { defId = strDef.DefId }, new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="label label-warning">No string definitions exist</div>
+        }
+    </div>
+</div>

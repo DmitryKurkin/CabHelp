@@ -1,0 +1,42 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Project Summary";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Project summary</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.LabelFor(m => m.Project.AppName, "App name:")
+            @Model.Project.AppName
+        </p>
+
+        <p>
+            @Html.LabelFor(m => m.Project.StringDefs.Defs, "String definitions:")
+            @Model.Project.StringDefs.Defs.Count()
+        </p>
+        
+        <p>
+            @Html.LabelFor(m => m.Project.SourceDirs.Directories, "Source directories:")
+            @Model.Project.SourceDirs.Directories.Count()
+        </p>
+        
+        <p>
+            @Html.LabelFor(m => m.Project.DestinationDirs.Directories, "Destination directories:")
+            @Model.Project.DestinationDirs.Directories.Count()
+        </p>
+        
+        <p>
+            @Html.LabelFor(m => m.Project.DestinationRegValuesSections, "Destination registry values sections:")
+            @Model.Project.DestinationRegValuesSections.Count()
+        </p>
+        
+        <p>
+            @Html.LabelFor(m => m.Project.ShortcutListSections, "Destination shortcut list sections:")
+            @Model.Project.ShortcutListSections.Count()
+        </p>
+    </div>
+</div>

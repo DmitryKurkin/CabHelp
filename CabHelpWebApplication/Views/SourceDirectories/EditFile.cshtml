@@ -1,0 +1,27 @@
+﻿@model CabHelpWebApplication.Models.SourceFileViewModel
+
+@{
+    ViewBag.Title = "Source File";
+}
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h4 class="panel-title">Edit a source file</h4>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditFile", "SourceDirectories"))
+        {
+            @Html.HiddenFor(m => m.SourceFile.FileId)
+
+            <div class="panel-group">
+                @Html.LabelFor(m => m.SourceFile.FileName, "File name:")
+                @Html.TextBoxFor(m => m.SourceFile.FileName, new { @class = "form-control", placeholder = "E.g. 'MyCoolApp.exe'" })
+            </div>
+            
+            @Html.Hidden("parentDirId", Model.ParentDirId)
+
+            <input value="Apply" type="submit" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger" })
+        }
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Destination Registry Values Sections Info";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Destination registry values sections info</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.ActionLink("Create new", "CreateSection", null, new { @class = "btn btn-primary" })
+        </p>
+
+        @if (Model.Project.DestinationRegValuesSections.Count() != 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Section name</th>
+                        <th>Is default</th>
+                        <th>Values</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var drvs in Model.Project.DestinationRegValuesSections)
+                    {
+                        <tr>
+                            <td>@drvs.Name</td>
+                            <td>@drvs.IsDefault</td>
+                            <td>
+                                <p>
+                                    @Html.ActionLink("Create new", "CreateValue", new { sectionId = drvs.SectionId }, new { @class = "btn btn-xs btn-primary" })
+                                </p>
+                                @if (drvs.RegValues.Count() != 0)
+                                {
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Registry root</th>
+                                                <th>Subkey</th>
+                                                <th>Value name</th>
+                                                <th>Value</th>
+                                                <th>Flags</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var drv in drvs.RegValues)
+                                            {
+                                                <tr>
+                                                    <td>@drv.RegistryRoot</td>
+                                                    <td>@drv.Subkey</td>
+                                                    <td>@drv.ValueName</td>
+                                                    <td>@drv.Value</td>
+                                                    <td>@drv.Flags</td>
+                                                    <td>
+                                                        @Html.ActionLink("Edit", "EditValue", new { sectionId = drvs.SectionId, valueId = drv.ValueId }, new { @class = "btn btn-xs btn-primary" })
+                                                        @Html.ActionLink("Delete", "DeleteValue", new { sectionId = drvs.SectionId, valueId = drv.ValueId }, new { @class = "btn btn-xs btn-danger" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="label label-warning">No destination registry values exist</div>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditSection", new { sectionId = drvs.SectionId }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteSection", new { sectionId = drvs.SectionId }, new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="label label-warning">No destination registry values sections exist</div>
+        }
+    </div>
+</div>

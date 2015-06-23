@@ -1,0 +1,16 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@using Emerson.Common;
+
+@{
+    ViewBag.Title = "Project Output";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Project output</h4>
+    </div>
+    <div class="panel-body">
+        @Html.TextArea("output", ProjectBuilder.Build(Model.Project), new { rows = "30", cols = "120", @readonly = "readonly" })
+    </div>
+</div>

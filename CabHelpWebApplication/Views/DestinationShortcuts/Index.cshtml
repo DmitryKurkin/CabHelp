@@ -1,0 +1,83 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Destination Shortcut List Sections Info";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Destination shortcut list sections info</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.ActionLink("Create new", "CreateSection", null, new { @class = "btn btn-primary" })
+        </p>
+
+        @if (Model.Project.ShortcutListSections.Count() != 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Section name</th>
+                        <th>Shortcuts</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sect in Model.Project.ShortcutListSections)
+                    {
+                        <tr>
+                            <td>@sect.Name</td>
+                            <td>
+                                <p>
+                                    @Html.ActionLink("Create new", "CreateShortcut", new { sectionId = sect.SectionId }, new { @class = "btn btn-xs btn-primary" })
+                                </p>
+                                @if (sect.Shortcuts.Count() != 0)
+                                {
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Shortcut name</th>
+                                                <th>Shortcut type</th>
+                                                <th>Target path</th>
+                                                <th>Standard destination path</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var sc in sect.Shortcuts)
+                                            {
+                                                <tr>
+                                                    <td>@sc.Name</td>
+                                                    <td>@sc.Type</td>
+                                                    <td>@sc.TargetPath</td>
+                                                    <td>@sc.StandardDestinationPath</td>
+                                                    <td>
+                                                        @Html.ActionLink("Edit", "EditShortcut", new { sectionId = sect.SectionId, shortcutId = sc.ShortcutId }, new { @class = "btn btn-xs btn-primary" })
+                                                        @Html.ActionLink("Delete", "DeleteShortcut", new { sectionId = sect.SectionId, shortcutId = sc.ShortcutId }, new { @class = "btn btn-xs btn-danger" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="label label-warning">No destination shortcuts exist</div>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditSection", new { sectionId = sect.SectionId }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteSection", new { sectionId = sect.SectionId }, new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="label label-warning">No destination shortcut list sections exist</div>
+        }
+    </div>
+</div>

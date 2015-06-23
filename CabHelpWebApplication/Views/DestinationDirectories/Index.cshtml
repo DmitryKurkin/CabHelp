@@ -1,0 +1,86 @@
+﻿@model CabHelpWebApplication.Models.ProjectViewModel
+
+@{
+    ViewBag.Title = "Destination Directories Info";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h4 class="panel-title">Destination directories info</h4>
+    </div>
+    <div class="panel-body">
+        <p>
+            @Html.ActionLink("Create new", "CreateDirectory", null, new { @class = "btn btn-primary" })
+        </p>
+
+        @if (Model.Project.DestinationDirs.Directories.Count() != 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Directory name</th>
+                        <th>Is default</th>
+                        <th>Section name</th>
+                        <th>Files</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dd in Model.Project.DestinationDirs.Directories)
+                    {
+                        <tr>
+                            <td>@dd.DirectoryName</td>
+                            <td>@dd.IsDefault</td>
+                            <td>@dd.SectionName</td>
+                            <td>
+                                <p>
+                                    @Html.ActionLink("Create new", "CreateFile", new { dirId = dd.DirId }, new { @class = "btn btn-xs btn-primary" })
+                                </p>
+
+                                @if (dd.Files.Count() != 0)
+                                {
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Original file name</th>
+                                                <th>New file name</th>
+                                                <th>Flags</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var df in dd.Files)
+                                            {
+                                                <tr>
+                                                    <td>@df.SourceFileName</td>
+                                                    <td>@df.FileName</td>
+                                                    <td>@df.Flags</td>
+                                                    <td>
+                                                        @Html.ActionLink("Edit", "EditFile", new { dirId = dd.DirId, fileId = df.FileId }, new { @class = "btn btn-xs btn-primary" })
+                                                        @Html.ActionLink("Delete", "DeleteFile", new { dirId = dd.DirId, fileId = df.FileId }, new { @class = "btn btn-xs btn-danger" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="label label-warning">No destination files exist</div>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditDirectory", new { dirId = dd.DirId }, new { @class = "btn btn-xs btn-primary" })
+                                @Html.ActionLink("Delete", "DeleteDirectory", new { dirId = dd.DirId }, new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="label label-warning">No destination directories exist</div>
+        }
+    </div>
+</div>

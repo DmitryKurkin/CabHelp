@@ -1,11 +1,28 @@
 ﻿namespace CabHelpWebApplication.Controllers
 {
+    using System;
+    using System.IO;
+    using System.Net.Mime;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
     using CabHelpWebApplication.Models;
     using Emerson.Common;
-    using System.Web.Mvc;
 
     public class HomeController : Controller
     {
+        private static Project BuildDefaultProject()
+        {
+            var project = new Project
+            {
+                AppName = "App01",
+                CompanyName = "Company01",
+                InstallDirectory = "Folder01"
+            };
+
+            return project;
+        }
+
         public HomeController()
         {
             if (ProjectRepository.Project == null)
@@ -16,7 +33,7 @@
 
         public ActionResult Index(string theothers)
         {
-            return View(new ProjectViewModel { Project = ProjectRepository.Project });
+            return View(new ProjectViewModel {Project = ProjectRepository.Project});
         }
 
         public ActionResult CreateProject()
@@ -28,19 +45,34 @@
 
         public ActionResult Output()
         {
-            return View(new ProjectViewModel { Project = ProjectRepository.Project });
+            return View(new ProjectViewModel {Project = ProjectRepository.Project});
         }
 
-        private Project BuildDefaultProject()
+        public async Task<ActionResult> SaveProject()
         {
-            var project = new Project
+            using (var memoryStream = new MemoryStream())
+            using (var streamWriter = new StreamWriter(memoryStream) {AutoFlush = true})
             {
-                AppName = "App01",
-                CompanyName = "Company01",
-                InstallDirectory = "Folder01"
-            };
+                await streamWriter.WriteAsync(ProjectPersist.Save(ProjectRepository.Project));
+                return File(memoryStream.ToArray(), MediaTypeNames.Application.Octet, "Project.json");
+            }
+        }
 
-            return project;
+        [HttpPost]
+        public ActionResult LoadProject(HttpPostedFileBase postedFile)
+        {
+            try
+            {
+                using (var streamReader = new StreamReader(postedFile.InputStream))
+                {
+                    ProjectRepository.Project = ProjectPersist.Load(streamReader.ReadToEnd());
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

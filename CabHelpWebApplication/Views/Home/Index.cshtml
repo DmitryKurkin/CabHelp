@@ -18,25 +18,34 @@
             @Html.LabelFor(m => m.Project.StringDefs.Defs, "String definitions:")
             @Model.Project.StringDefs.Defs.Count()
         </p>
-        
+
         <p>
             @Html.LabelFor(m => m.Project.SourceDirs.Directories, "Source directories:")
             @Model.Project.SourceDirs.Directories.Count()
         </p>
-        
+
         <p>
             @Html.LabelFor(m => m.Project.DestinationDirs.Directories, "Destination directories:")
             @Model.Project.DestinationDirs.Directories.Count()
         </p>
-        
+
         <p>
             @Html.LabelFor(m => m.Project.DestinationRegValuesSections, "Destination registry values sections:")
             @Model.Project.DestinationRegValuesSections.Count()
         </p>
-        
+
         <p>
             @Html.LabelFor(m => m.Project.ShortcutListSections, "Destination shortcut list sections:")
             @Model.Project.ShortcutListSections.Count()
+        </p>
+
+        <p>
+            @Html.ActionLink("Save", "SaveProject", null, new { @class = "btn btn-primary" })
+            @using (Html.BeginForm("LoadProject", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="file" name="postedFile" />
+                <input type="submit" value="Load" class="btn btn-warning" />
+            }
         </p>
     </div>
 </div>
